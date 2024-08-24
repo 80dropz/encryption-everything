@@ -19,8 +19,7 @@ oneclickgen = False
 
 
 def dontuseprevious():
-    global plusoneonlog
-    plusoneonlog = not False
+    logexists.destroy()
 
 
 
@@ -61,6 +60,7 @@ def filename():
     if filelocation.endswith(".txt"):
         flr = open(filelocation, "r")
         filelocationcheck = not False
+        filelbl.configure(text="File is ready", text_color="green")
     else: 
         locationerror = customtkinter.CTk()
         locationerror.geometry("150x100")
@@ -73,7 +73,7 @@ def filename():
 def encrypt():
     if keygenerated == True:
         if filelocationcheck == True:
-            encryptionstarted.configure(text="Starting Encryption")
+            encryptionstarted.configure(text="Starting Encryption", text_color="green")
             flr2 = flr.read()
             flr2str = str(flr2)
             logfile = open("logfile", "r")
@@ -118,12 +118,12 @@ def encrypt():
 
 
         else:
-            print("bad")
+            encryptionstarted.configure(text="you need to input your file", text_color="red")
 
     elif filelocationcheck == True:
-        print("Generate your key")
+        encryptionstarted.configure(text="Generate your key", text_color="red")
     else:
-        print("You need to generate your key")
+        encryptionstarted.configure(text="You need to generate key and input file", text_color="red")
 
 def keygenerator():
     global keygenerated
@@ -139,7 +139,7 @@ def keygenerator():
     global key10str
 
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    if keygenerated == True:
+    if keygenerated == False:
         if plusoneonlog == True:
             new_file_path = os.path.join(script_dir, 'logfile1')
         else: 
@@ -170,7 +170,7 @@ def keygenerator():
             keygeneratedlbl.configure(text="Key has been generated", text_color="green")
             keygeneratedlbl2.configure(text="  Check log file", text_color="green")
     else:
-        print("rwre")
+        anyerror.configure(text="Already generated a key")
 
 
 
@@ -207,7 +207,7 @@ encryptionstarted = customtkinter.CTkLabel(mainwindow, text=" ", text_color="gre
 encryptionstarted.place(relx=.5, rely=.7, anchor="center")
 
 filelbl = customtkinter.CTkLabel(mainwindow, text=" ", text_color="green")
-filelbl.place(relx=.65, rely=.2, anchor="center")
+filelbl.place(relx=.8, rely=.27, anchor="center")
 if foundinlog == True:
     keygeneratedlbl.configure(text="Key found in log", text_color="green")
 mainwindow.mainloop()
